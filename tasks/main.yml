@@ -1,0 +1,35 @@
+---
+# tasks file for deploy-py-app
+- name: Creating service folder "{{service_path}}"
+  file: path="{{service_path}}" state=directory
+
+- name: Copying docker-compose
+  template:
+    src: ./docker-compose.yml.j2
+    dest: "{{service_path}}/docker-compose.yml"
+
+- name: Copying environment
+  template:
+    src: "{{service_env}}"
+    dest: "{{service_path}}/.env"
+
+- name: Restarting service
+  block:
+    - name: Starting service
+      service: name=docker-compose@{{service_name}} state=restarted enabled=yes
+
+    - name: Waiting for service to come on {{service_port}}
+      wait_for: host={{service_host}} port={{service_port}} timeout=100
+      when: service_port != ""
+
+    - name: Checking prometheus service on {{prom_port}}
+      wait_for: host={{service_host}} port={{prom_port}} timeout=100
+      when: prom_port != ""
+
+  rescue:
+    - name: Collecting information
+      command: systemctl status docker-compose@{{service_name}}
+      register: result
+    
+    - name: Result
+      debug: msg={{result.stdout}}

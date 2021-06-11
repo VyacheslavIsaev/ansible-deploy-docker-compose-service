@@ -1,0 +1,17 @@
+---
+version: "2"
+
+services:
+    {{service_name}}:
+        image: "{{app_image_name}}"
+        environment:
+            SERVICE_NAME:   {{service_name}}
+            KAFKA_BROKERS:  ${KAFKA_BROKERS}
+            KAFKA_SECURITY: ${KAFKA_SECURITY}
+            KAFKA_TOPIC:    {{kafka_topic}}
+            MQTT_BROKER:    ${MQTT_BROKER}
+            MQTT_SUBSCRIBE: ${MQTT_SUBSCRIBE}
+            PROM_PORT:      {{prom_port}}
+        ports:
+            - "{{prom_port}}:{{prom_port}}/tcp"
+            
