@@ -13,9 +13,10 @@ Role Variables
 
 service_name: "ServiceName"
 service_host: "{{ansible_default_ipv4.address}}"
-service_port: ""
-prom_port: ""
-service_image: "{{service_name}}:latest"
+service_port: - service port to expose
+prom_port:    - prometheus port to expose
+service_image: "{{service_name}}:latest" - image to use inside docker-compose
+container_environment: - list of container environment variables.
 
 Dependencies
 ------------
@@ -34,6 +35,7 @@ Example Playbook
               service_port: ""
               prom_port: ""
               service_image: "{{service_name}}:latest"
+              container_environment:
 
 
 License
