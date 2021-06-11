@@ -3,15 +3,21 @@ version: "2"
 
 services:
     {{service_name}}:
-        image: "{{app_image_name}}"
+        image: "{{service_image}}"
+        restart: "{{service_restart}}"
+{% if container_environment|length > 0 %}
         environment:
-            SERVICE_NAME:   {{service_name}}
-            KAFKA_BROKERS:  ${KAFKA_BROKERS}
-            KAFKA_SECURITY: ${KAFKA_SECURITY}
-            KAFKA_TOPIC:    {{kafka_topic}}
-            MQTT_BROKER:    ${MQTT_BROKER}
-            MQTT_SUBSCRIBE: ${MQTT_SUBSCRIBE}
-            PROM_PORT:      {{prom_port}}
+{% endif %}
+{% for key, value in container_environment.items() %}
+          {{key}}: {{value}}
+{% endfor %}
+{% if prom_port|length > 0 or service_port|length > 0 %}
         ports:
-            - "{{prom_port}}:{{prom_port}}/tcp"
-            
+{% endif %}
+{% if prom_port|length > 0  %}            
+            - "{{prom_port}}:{{prom_port}}"
+{% endif %}
+{% if service_port|length > 0 %}
+            - "{{service_port}}:{{service_port}}"
+{% endif %}
+
