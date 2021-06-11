@@ -15,7 +15,8 @@ service_name:   - name of the service how it will appear on the host
 service_host:   - ip address to check open ports
 service_ports:  - dictionary of service ports to expose
 service_image:  - container image to use inside docker-compose
-container_environment: - list of container environment variables.
+service_environment: - dictionary of container environment variables
+service_volumes:     - dictionary of service volumes to configure
 
 Dependencies
 ------------

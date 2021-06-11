@@ -13,6 +13,7 @@
   template:
     src: "{{service_env}}"
     dest: "{{service_path}}/.env"
+  when: service_env != ""
   notify: restart
 
 - name: Restarting service
