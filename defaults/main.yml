@@ -5,6 +5,7 @@ service_host: "{{ansible_default_ipv4.address}}"
 service_ports: []
 service_restart: "no"
 service_image: "{{service_name}}:latest"
+service_env: ""
 service_path: "/etc/docker/compose/{{service_name}}"
 service_environment: {}
 service_volumes: {}
