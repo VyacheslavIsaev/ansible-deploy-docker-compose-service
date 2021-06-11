@@ -6,5 +6,3 @@ service_port: ""
 prom_port: ""
 service_image: "{{service_name}}:latest"
 service_path: "/etc/docker/compose/{{service_name}}"
-
-
