@@ -2,7 +2,7 @@
 # defaults file for deploy-py-app
 service_name: "ServiceName"
 service_host: "{{ansible_default_ipv4.address}}"
-service_ports: []
+service_ports: {}
 service_restart: "no"
 service_image: "{{service_name}}:latest"
 service_env: ""
