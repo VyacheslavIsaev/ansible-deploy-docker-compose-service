@@ -11,13 +11,10 @@ services:
 {% for key, value in container_environment.items() %}
           {{key}}: {{value}}
 {% endfor %}
-{% if prom_port|length > 0 or service_port|length > 0 %}
+{% if service_ports|length > 0 %}
         ports:
 {% endif %}
-{% if prom_port|length > 0  %}            
-            - "{{prom_port}}:{{prom_port}}"
-{% endif %}
-{% if service_port|length > 0 %}
-            - "{{service_port}}:{{service_port}}"
-{% endif %}
+{% for key, value in service_ports.items() %}
+          - "{{key}}:{{value}}"
+{% endfor %}
 

@@ -11,11 +11,10 @@ Host is enable for docker-compose services.
 Role Variables
 --------------
 
-service_name: "ServiceName"
-service_host: "{{ansible_default_ipv4.address}}"
-service_port: - service port to expose
-prom_port:    - prometheus port to expose
-service_image: "{{service_name}}:latest" - image to use inside docker-compose
+service_name:   - name of the service how it will appear on the host
+service_host:   - ip address to check open ports
+service_ports:  - dictionary of service ports to expose
+service_image:  - container image to use inside docker-compose
 container_environment: - list of container environment variables.
 
 Dependencies
@@ -32,10 +31,12 @@ Example Playbook
             vars:
               service_name: "ServiceName"
               service_host: "{{ansible_default_ipv4.address}}"
-              service_port: ""
-              prom_port: ""
+              service_ports:
+                8181:8181
+                9080:9080
               service_image: "{{service_name}}:latest"
               container_environment:
+                SERVICE_NAME : "{{service_name}}"
 
 
 License

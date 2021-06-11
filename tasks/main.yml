@@ -18,13 +18,10 @@
     - name: Starting service
       service: name=docker-compose@{{service_name}} state=restarted enabled=yes
 
-    - name: Waiting for service to come on {{service_port}}
-      wait_for: host={{service_host}} port={{service_port}} timeout=100
-      when: service_port != ""
-
-    - name: Checking prometheus service on {{prom_port}}
-      wait_for: host={{service_host}} port={{prom_port}} timeout=100
-      when: prom_port != ""
+    - name: Waiting for service to come on {{item.key}}
+      wait_for: host={{service_host}} port={{item.key}} timeout=100
+      loop:
+        - "service_ports"
 
   rescue:
     - name: Collecting information
