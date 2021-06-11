@@ -1,2 +1,9 @@
 ---
 # handlers file for deploy-py-app
+- name: restart
+  block:
+  - name: Restarting service
+    service: name=docker-compose@{{service_name}} state=stopped
+
+  - name: Starting service
+    service: name=docker-compose@{{service_name}} state=started

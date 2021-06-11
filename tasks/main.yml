@@ -7,21 +7,22 @@
   template:
     src: ./docker-compose.yml.j2
     dest: "{{service_path}}/docker-compose.yml"
+  notify: restart
 
 - name: Copying environment
   template:
     src: "{{service_env}}"
     dest: "{{service_path}}/.env"
+  notify: restart
 
 - name: Restarting service
   block:
     - name: Starting service
-      service: name=docker-compose@{{service_name}} state=restarted enabled=yes
+      service: name=docker-compose@{{service_name}} state=started enabled=yes
 
-    - name: Waiting for service to come on {{item.key}}
+    - name: Waiting for service ports to come
       wait_for: host={{service_host}} port={{item.key}} timeout=100
-      loop:
-        - "service_ports"
+      loop: "{{ service_ports | dict2items }}"
 
   rescue:
     - name: Collecting information
