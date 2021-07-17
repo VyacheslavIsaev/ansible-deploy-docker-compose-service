@@ -17,6 +17,9 @@ service_ports:  - dictionary of service ports to expose
 service_image:  - container image to use inside docker-compose
 service_environment: - dictionary of container environment variables
 service_volumes:     - dictionary of service volumes to configure
+service_restart:     - docker restart policy
+service_env:         - env file to copy
+docker_compose_src:  - source docker-compose file
 
 Dependencies
 ------------

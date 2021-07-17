@@ -9,3 +9,4 @@ service_env: ""
 service_path: "/etc/docker/compose/{{service_name}}"
 service_environment: {}
 service_volumes: {}
+docker_compose_src: "./docker-compose.yml.j2"
