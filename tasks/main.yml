@@ -5,7 +5,7 @@
 
 - name: Copying docker-compose
   template:
-    src: ./docker-compose.yml.j2
+    src: "{{docker_compose_src}}"
     dest: "{{service_path}}/docker-compose.yml"
   notify: restart
 
