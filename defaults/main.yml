@@ -6,6 +6,7 @@ service_ports: {}
 service_restart: "no"
 service_image: "{{service_name}}:latest"
 service_env: ""
+host_specific_env: "./{{inventory_hostname}}"
 service_path: "/etc/docker/compose/{{service_name}}"
 service_environment: {}
 service_volumes: {}

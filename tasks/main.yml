@@ -9,11 +9,24 @@
     dest: "{{service_path}}/docker-compose.yml"
   notify: restart
 
-- name: Copying environment
+- name: Copying specified environment
   template:
     src: "{{service_env}}"
     dest: "{{service_path}}/.env"
   when: service_env != ""
+  notify: restart
+
+- name: Looking for host specific environment
+  stat: 
+    path: "{{host_specific_env}}"
+  register: host_specific_file
+  when: host_specific_env != ""
+
+- name: Copying host specific environment
+  template:
+    src: "{{host_specific_env}}"
+    dest: "{{service_path}}/.env"
+  when: host_specific_file.stat.exists
   notify: restart
 
 - name: Restarting service
